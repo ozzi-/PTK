@@ -59,3 +59,41 @@ Getting Log from http://192.168.200.36/phish/log.json
 0. Upload log.php to a webserver.
 1. Include log.php in your actual phishing page
 2. Edit config.properties
+3. Create the body file
+4. Create the recipient file
+
+### Configuration
+The following settings must be configured initially:
+```
+smtpHost = 127.0.0.1
+smtpPort = 25
+smtpUser = test1
+smtpPassword = lol
+from = test1@local.ch
+subject = Test
+bodyFile = /home/ozzi/body
+recipientFile = /home/ozzi/recipient
+logURL = http://192.168.200.36/phish/log.json
+trackingPixelURL = http://192.168.200.36/phish/log.php
+```
+
+### Body File
+This files define the template message sent to the recipients.
+Note: %name%, %mailaddress% and %trackingpixel% will be replaced when sending.
+You can use sendsim to check the results before sending. Those variables are not required.
+```
+<html>
+Dear Mister %name%
+Do You even Lift
+please go here <a href="http://192.168.200.36/phish/log.php?id=%mailaddress%">THX</a>
+%trackingpixel%
+</html>
+```
+
+### Recipients File
+Recipients are stored in a simple fashion. One recipient per line. In order to set the %name% variable, use a ">" character after the email like illustrated below
+```
+ozzi@ozzimail.ch>Ozzi
+ceo@bigcompany.ch>Mr. Hansjoerg Federli
+noname@random.com
+```

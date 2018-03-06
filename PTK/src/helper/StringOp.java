@@ -2,7 +2,9 @@ package helper;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.Base64;
+import java.util.Date;
 
 public class StringOp {
 	public static String[] splitRecipient(String recipient) {
@@ -37,6 +39,12 @@ public class StringOp {
 		cbody = StringOp.injectVar(cbody, name, "%name%");
 		cbody = StringOp.injectVar(cbody, mailEncoded , "%mailaddress%");
 		cbody = StringOp.injectVar(cbody, trackingPixelHTML , "%trackingpixel%");
+		
+		Date date = new Date();		
+		cbody = StringOp.injectVar(cbody, new SimpleDateFormat("yyyy").format(date) , "%yyyy%");
+		cbody = StringOp.injectVar(cbody, new SimpleDateFormat("dd").format(date) , "%dd%");
+		cbody = StringOp.injectVar(cbody, new SimpleDateFormat("MM").format(date) , "%MM%");
+		
 		return cbody;
 	}
 }

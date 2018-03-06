@@ -10,6 +10,13 @@
   $entry["datetime"]=$datetime;
   $entry["ip"]=$ip;
   $entry["id"]=$id;
+  $entry["type"]="hit";
+
+  if(isset($_GET["pxl"])){
+    header("Content-Type: image/png");
+    echo base64_decode("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEUAAACnej3aAAAAAXRSTlMAQObYZgAAAApJREFUCNdjYAAAAAIAAeIhvDMAAAAASUVORK5CYII=");
+    $entry["type"]="read";
+  }
 
   if(!file_exists($logPath)){
     file_put_contents($logPath, '[]');

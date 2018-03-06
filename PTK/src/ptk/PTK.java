@@ -21,9 +21,7 @@ public class PTK {
 		List<String> toList = File.readFileAsArray(recipientFile);
 		String bodyFile = config.getProperty("bodyFile");
 		String body = File.readFileAsString(bodyFile);
-		
-		args[0]="evaluatefull";
-		
+				
 		if (args.length == 0) {
 			Printing.printUsage();
 		} else {

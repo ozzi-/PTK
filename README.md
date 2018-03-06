@@ -1,5 +1,5 @@
 # PTK
-Phishing Toolkit
+Phishing Toolkit for Red Team Engagements (https://en.wikipedia.org/wiki/Red_team)
 
 ```USAGE: java -jar ptk.jar {command}
 Commands:
@@ -80,8 +80,9 @@ trackingPixelURL = http://192.168.200.36/phish/log.php
 
 ### Body File
 This files define the template message sent to the recipients.
+
 Note: %name%, %mailaddress% and %trackingpixel% will be replaced when sending.
-You can use sendsim to check the results before sending. Those variables are not required.
+You can use sendsim to check the results before sending. Those variables are not required. Further variables are %yyyy% (current year), %MM% (current month) and %dd% (current day).
 ```
 <html>
 Dear %name%

@@ -17,7 +17,8 @@ Commands:
 Sending Mail to oz@ozzi-mail.com>Ozzi with body:
 <html>
 Dear Ozzi
-please go here <a href="http://192.168.200.36/phish/log.php?id=b3pAb3otd2ViLmNvbQ%3D%3D">IMPORTANT LINK</a>
+Please find your invoice here <a href="http://192.168.200.36/phish/log.php?id=b3pAb3otd2ViLmNvbQ%3D%3D">Ozzi_invoice.pdf</a><br>
+Phishing for Phish Inc.
 <img src="http://192.168.200.36/phish/log.php?pxl=&id=b3pAb3otd2ViLmNvbQ%3D%3D" style="height:1px !important; width:1px !important; border: 0 !important; margin: 0 !important; padding: 0 !important" width="1" height="1" border="0">
 </html>
 
@@ -83,9 +84,10 @@ Note: %name%, %mailaddress% and %trackingpixel% will be replaced when sending.
 You can use sendsim to check the results before sending. Those variables are not required.
 ```
 <html>
-Dear Mister %name%
-Do You even Lift
-please go here <a href="http://192.168.200.36/phish/log.php?id=%mailaddress%">THX</a>
+Dear %name%
+Please find your invoice here <a href="http://192.168.200.36/phish/log.php?id=%mailaddress%">%name%_invoice.pdf</a><br>
+With kind regards<br>
+Phishing for Phish Inc.
 %trackingpixel%
 </html>
 ```

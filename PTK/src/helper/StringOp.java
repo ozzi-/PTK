@@ -28,13 +28,15 @@ public class StringOp {
 		return string;
 	}
 	
-	public static String injectBody(String recipient, String cbody) {
+	public static String injectBody(String recipient, String cbody, String trackingPixelURL) {
 		String emailAddress = StringOp.splitRecipient(recipient)[0];
 		String name = StringOp.splitRecipient(recipient)[1];
 		String mailEncoded = StringOp.urlEncodeString(emailAddress);
+		String trackingPixelHTML = "<img src=\""+trackingPixelURL+"?pxl=&id="+mailEncoded+"\" style=\"height:1px !important; width:1px !important; border: 0 !important; margin: 0 !important; padding: 0 !important\" width=\"1\" height=\"1\" border=\"0\">";
 
 		cbody = StringOp.injectVar(cbody, name, "%name%");
 		cbody = StringOp.injectVar(cbody, mailEncoded , "%mailaddress%");
+		cbody = StringOp.injectVar(cbody, trackingPixelHTML , "%trackingpixel%");
 		return cbody;
 	}
 }

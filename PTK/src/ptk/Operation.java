@@ -40,7 +40,7 @@ public class Operation {
 					}
 				}
 			}
-			System.out.println(uniqueHits + " of " + toList.size() + " phished.");
+			System.out.println(uniqueHits + " of " + toList.size() + " read the mail / clicked the link.");
 			if (full) {
 				Printing.printPhisedFull(phishedRecipients);
 			} else {
@@ -50,14 +50,21 @@ public class Operation {
 	}
 
 	private static int updatePhishes(ArrayList<PhishedRecipient> phishedRecipients, int uniqueHits, String recipient, JsonValue jv) {
+		boolean hit = jv.asObject().get("type").asString().equals("hit");
 		int index = PhishedRecipient.phishedRecipientsIndexOf(phishedRecipients, recipient);
 		if (index>=0) {
-			phishedRecipients.get(index).anotherHit();
+			if(hit) {
+				phishedRecipients.get(index).anotherHit();				
+			}else {
+				phishedRecipients.get(index).anotherRead();
+			}
 		} else {
 			PhishedRecipient pr = new PhishedRecipient(
 					recipient,
 					jv.asObject().get("ip").asString(),
-					jv.asObject().get("datetime").asString()
+					jv.asObject().get("datetime").asString(),
+					hit?1:0,
+					hit?0:1
 			);
 			phishedRecipients.add(pr);
 			uniqueHits++;
@@ -65,19 +72,19 @@ public class Operation {
 		return uniqueHits;
 	}
 
-	static void mSimSend(List<String> toList, String body) throws UnsupportedEncodingException {
+	static void mSimSend(List<String> toList, String body, String trackingPixelURL) throws UnsupportedEncodingException {
 		for (String recipient : toList) {
-			String cbody = StringOp.injectBody(recipient,body);			
+			String cbody = StringOp.injectBody(recipient,body,trackingPixelURL);			
 			System.out.println("Sending Mail to " + recipient + " with body:");
 			System.out.println(cbody);
 			System.out.println("----");
 		}
 	}
 
-	static void mSend(String smtpHost, int smtpPort, String smtpUser, String smtpPassword, String from, String subject, List<String> toList, String body) throws UnsupportedEncodingException {
+	static void mSend(String smtpHost, int smtpPort, String smtpUser, String smtpPassword, String from, String subject, List<String> toList, String body, String trackingPixelURL) throws UnsupportedEncodingException {
 		System.out.println("Preparing to send to "+toList.size()+" recipients");
 		for (String recipient : toList) {
-			String cbody = StringOp.injectBody(recipient,body);
+			String cbody = StringOp.injectBody(recipient,body,trackingPixelURL);
 			String mailAddress = StringOp.splitRecipient(recipient)[0];
 			boolean success = Mail.sendSimpleMailSMTP(smtpHost, smtpPort, smtpUser, smtpPassword, from, mailAddress, subject, cbody);
 			System.out.println((success ? "Successfully" : "Unsuccessfully") + " sent mail to " + mailAddress);

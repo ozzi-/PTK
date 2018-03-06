@@ -19,13 +19,13 @@ public class Printing {
 	public static void printPhisedFull(ArrayList<PhishedRecipient> phishedRecipients) {
 		System.out.println();
 		Formatter fmt = new Formatter(); 
-		System.out.println(fmt.format("%30s %30s %20s %10s", "Target", "Datetime", "IP", "Hits"));
+		System.out.println(fmt.format("%30s %25s %20s %10s %10s", "Target", "Datetime", "IP", "Pixel", "Clicks"));
 		fmt.close(); fmt = new Formatter();
-		System.out.println("=============================================================================================");
+		System.out.println("===================================================================================================");
 		for (PhishedRecipient phisedRecipient : phishedRecipients) {
 		    System.out.println(
-		    		fmt.format("%30s %30s %20s %10s ", 
-		    		phisedRecipient.getRecipient(),phisedRecipient.getDateTime(),phisedRecipient.getIP(),phisedRecipient.getHits())
+		    		fmt.format("%30s %25s %20s %10s %10s ", 
+		    		phisedRecipient.getRecipient(),phisedRecipient.getDateTime(),phisedRecipient.getIP(),phisedRecipient.getReads(), phisedRecipient.getHits())
 		    );
 		    fmt.close(); fmt = new Formatter();
 		    System.out.println();

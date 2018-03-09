@@ -14,6 +14,7 @@ public class Printing {
 		System.out.println("   'send'         - sends the emails");
 		System.out.println("   'evaluate'     - evaluates which recipients clicked the link");
 		System.out.println("   'evaluatefull' - evaluates which recipients clicked the link and prints information");
+		System.out.println("   'clone {url}'  - clones the specified website to the current directory");
 	}
 	
 	public static void printPhisedFull(ArrayList<PhishedRecipient> phishedRecipients) {

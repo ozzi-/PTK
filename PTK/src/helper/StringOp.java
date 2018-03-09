@@ -3,8 +3,10 @@ package helper;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.Date;
+import java.util.List;
 
 public class StringOp {
 	public static String[] splitRecipient(String recipient) {
@@ -17,6 +19,15 @@ public class StringOp {
 
 	public static String injectVar(String target, String value, String placeholder) {
 		return target.replaceAll(placeholder, value);
+	}
+	
+	
+	public static String cutOffFileNameFromPath(String path) {
+		if(path.endsWith("/")) {
+			path.substring(0,path.length()-1);
+		}
+		int endPos = path.lastIndexOf("/");
+		return path.substring(0,endPos);
 	}
 	
 	public static String urlEncodeString(String string) {
@@ -48,5 +59,55 @@ public class StringOp {
 		cbody = StringOp.injectVar(cbody, new SimpleDateFormat("MM").format(date) , "%MM%");
 		
 		return cbody;
+	}
+	
+	public static String trimString(String s, int maxLength){
+		if(s.length()>maxLength){
+			return s.substring(0, Math.min(s.length(), maxLength-2))+"..";	
+		}
+		return s;
+	}
+	
+	public static String urlFileNameSafe(String url, boolean rewriteHashBang) {
+		url = url.replace("?", "-Q-");
+		url = url.replace("&", "-A-");
+		if(rewriteHashBang) {
+			int hashTagPos = url.indexOf("#");
+			if(hashTagPos!=-1) {
+				url = url.substring(0,hashTagPos);			
+			}	
+		}
+		return url;
+	}
+	
+	public static String urlFileNameSafeRevert(String filename) {
+		filename = filename.replace("-Q-", "?");
+		filename = filename.replace("-A-", "&");
+		filename = filename.replace("-H-", "#");
+		return filename;
+	}
+	
+	public static boolean linkActIsSpecial(String linkAct) {
+		return (
+				linkAct.startsWith("javascript:") 
+				|| linkAct.startsWith("#") 
+				|| linkAct.startsWith("mailto:") 
+				|| linkAct.startsWith("tel:") 
+				|| linkAct.startsWith("skype:")
+		);
+	}
+
+
+	public static String resolveDotComponents(String aa) {
+		String res = "";
+		List<String> a = Arrays.asList(aa.split("/"));
+		for (String string : a) {
+			if(string.equals("..")) {
+				res = cutOffFileNameFromPath(res);
+			}else {
+				res += "/"+string;
+			}
+		}
+		return res.substring(1);
 	}
 }

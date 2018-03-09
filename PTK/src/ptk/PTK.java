@@ -4,12 +4,12 @@ import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Properties;
 
-import helper.File;
+import helper.FileH;
 import helper.Printing;
 
 public class PTK {
 	public static void main(String[] args) throws UnsupportedEncodingException {
-		Properties config = File.loadProperties();
+		Properties config = FileH.loadProperties();
 		String smtpHost = config.getProperty("smtpHost");
 		int smtpPort = Integer.valueOf(config.getProperty("smtpPort"));
 		String smtpUser = config.getProperty("smtpUser");
@@ -18,10 +18,11 @@ public class PTK {
 		String subject = config.getProperty("subject");
 		String trackingPixelURL = config.getProperty("trackingPixelURL");
 		String recipientFile = config.getProperty("recipientFile");
-		List<String> toList = File.readFileAsArray(recipientFile);
+		List<String> toList = FileH.readFileAsArray(recipientFile);
 		String bodyFile = config.getProperty("bodyFile");
-		String body = File.readFileAsString(bodyFile);
-				
+		String body = FileH.readFileAsString(bodyFile);
+
+		
 		if (args.length == 0) {
 			Printing.printUsage();
 		} else {
@@ -38,6 +39,11 @@ public class PTK {
 			case "evaluatefull":
 				Operation.mEvaluate(true, config, toList);
 				break;
+			case "clone":
+				if(args.length==3) {
+					Operation.clone(args[1].toLowerCase(),args[2]);					
+					break;
+				}
 			default:
 				Printing.printUsage();
 				break;
